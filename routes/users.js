@@ -18,7 +18,7 @@ const prisma = require("../prisma");
 router.get("/", async (req, res) => {
   try {
     const users = await prisma.user.findMany();
-    res.render("users", { users: users, user: req.user, title: "DoggyRescue" });
+    res.json({ users: users, user: req.user });
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -55,10 +55,9 @@ router.get("/:id", async (req, res) => {
         id,
       },
     });
-    res.render("userProfile", {
+    res.json({
       userById: userById,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);

@@ -81,10 +81,9 @@ router.get("/", async (req, res) => {
         user: req.user,
       },
     });
-    res.render("myAdoptionRequests", {
+    res.json({
       adoptionRequests: adoptionRequestList,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);
@@ -209,10 +208,9 @@ router.get("/:id", async (req, res) => {
         },
       },
     });
-    res.render("singleAdoptionRequest", {
+    res.json({
       adoptionRequest: singleAdoptionRequest,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);

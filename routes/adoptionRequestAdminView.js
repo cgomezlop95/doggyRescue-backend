@@ -80,10 +80,9 @@ router.get("/approved", async (req, res) => {
         },
       },
     });
-    res.render("adoptionRequestAdminView", {
+    res.json({
       adoptionRequests: adoptionRequestList,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);
@@ -172,10 +171,9 @@ router.get("/pending", async (req, res) => {
         requestApproved: null,
       },
     });
-    res.render("adoptionRequestAdminViewPending", {
+    res.json({
       adoptionRequests: adoptionRequestList,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);
@@ -206,10 +204,9 @@ router.get("/rejected", async (req, res) => {
         requestApproved: false,
       },
     });
-    res.render("adoptionRequestAdminViewRejected", {
+    res.json({
       adoptionRequests: adoptionRequestListRejected,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);
@@ -336,10 +333,9 @@ router.get("/:id", async (req, res) => {
         },
       },
     });
-    res.render("singleAdoptionRequest", {
+    res.json({
       adoptionRequest: singleAdoptionRequest,
       user: req.user,
-      title: "DoggyRescue",
     });
   } catch (error) {
     console.error(error);

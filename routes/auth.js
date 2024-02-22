@@ -2,39 +2,16 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const passport = require("passport");
-const prisma = require("../prisma");
-const transporter = require("../config/nodemailer");
+const jwt = require("jsonwebtoken");
 
-/**
- * @swagger
- * /auth/register:
- *   post:
- *     summary: Register a new user
- *     description: Registers a new user by saving their email and hashed password.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *                 description: User's email.
- *               password:
- *                 type: string
- *                 format: password
- *                 description: User's password.
- *     responses:
- *       302:
- *         description: Redirects to the login page on success.
- *       500:
- *         description: Redirects to the registration page on error.
- */
+const prisma = require("../prisma");
+
+const cookieSettings = {
+  httpOnly: true,
+  secure: false,
+  sameSite: "strict",
+};
+
 router.post("/register", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -42,122 +19,37 @@ router.post("/register", async (req, res) => {
       data: {
         email: req.body.email,
         password: hashedPassword,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
       },
     });
-
-    let mailOptions = {
-      from: "tuemail@gmail.com",
-      to: newUser.email,
-      subject: "Welcome to DoggyRescue",
-      html: `
-    <p>Dear ${newUser.firstName}, welcome to DoggyRescue!</p>
-    <p>Your account has been created with the email ${newUser.email}.</p>
-    <p>Please click <a href="https://doggyrescue.onrender.com/auth/login-page">here</a> to login.</p>
-  `,
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-
-    res.redirect("/auth/login-page");
+    const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
+    res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
   } catch (error) {
     console.log(error);
-    res.redirect("/auth/register-page");
+    res.status(500).send("Internal Server Error");
   }
 });
 
-/**
- * @swagger
- * /auth/login:
- *   post:
- *     summary: Authenticate user
- *     description: Logs in a user using email and password.
- *     requestBody:
- *       required: true
- *       content:
- *         application/x-www-form-urlencoded:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *               - password
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *                 description: User's email.
- *               password:
- *                 type: string
- *                 format: password
- *                 description: User's password.
- *     responses:
- *       302:
- *         description: Redirects to the home page on success, login page on failure.
- */
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/auth/login-page",
-    failureFlash: true,
-  })
-);
-
-/**
- * @swagger
- * /auth/login-page:
- *   get:
- *     summary: Login page
- *     description: Renders the login page.
- *     responses:
- *       200:
- *         description: Returns the login page.
- */
-router.get("/login-page", (req, res) => {
-  res.render("login", { error: req.flash("error"), title: "DoggyRescue" });
+router.post("/login", async (req, res, next) => {
+  try {
+    const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
+    res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-/**
- * @swagger
- * /auth/register-page:
- *   get:
- *     summary: Registration page
- *     description: Renders the registration page.
- *     responses:
- *       200:
- *         description: Returns the registration page.
- */
-router.get("/register-page", (req, res) => {
-  res.render("register", { error: req.flash("error"), title: "DoggyRescue" });
-});
-
-/**
- * @swagger
- * /logout:
- *   get:
- *     summary: Logout
- *     description: Logs out the user and redirects to the home page.
- *     responses:
- *       302:
- *         description: Redirects to the home page after logout.
- *       400:
- *         description: Bad request or server error.
- */
-
-router.get("/logout", (req, res) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
+router.get(
+  "/logged-in",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    try {
+      res.json({ user: req.user });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error");
     }
-    res.redirect("/");
-  });
-});
+  }
+);
 
 module.exports = router;

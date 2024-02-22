@@ -31,10 +31,9 @@ router.get("/:id", async (req, res) => {
         id,
       },
     });
-    res.render("adoptionRequest", {
+    res.json({
       dog: dogById,
-      user: req.user,
-      title: "DoggyRescue",
+      user: req.user
     });
   } catch (error) {
     console.error(error);
