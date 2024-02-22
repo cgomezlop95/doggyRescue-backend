@@ -25,8 +25,6 @@ const swaggerUi = require("./config/swagger").swaggerUi;
 
 require("dotenv").config();
 
-const indexRouter = require("./routes/index");
-
 const app = express();
 
 app.use(cors(corsOptions));
@@ -44,6 +42,7 @@ require("./config/cloudinary");
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler

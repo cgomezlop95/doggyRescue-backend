@@ -103,7 +103,7 @@ router.get("/adopted", async (req, res) => {
         dogAdopted: true,
       },
     });
-    res.json({ dogs: dogs, user: req.user });
+    res.json({ dogs: dogs });
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -163,10 +163,7 @@ router.get("/:id", async (req, res) => {
         id,
       },
     });
-    res.json({
-      dog: dogById,
-      user: req.user,
-    });
+    res.json({dog: dogById });
   } catch (error) {
     console.error(error);
     res.json("Server error");

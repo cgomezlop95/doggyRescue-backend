@@ -31,10 +31,7 @@ router.get("/:id", async (req, res) => {
         id,
       },
     });
-    res.json({
-      dog: dogById,
-      user: req.user
-    });
+    res.json({ dog: dogById });
   } catch (error) {
     console.error(error);
     res.json("Server error");

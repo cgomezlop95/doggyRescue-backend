@@ -45,11 +45,24 @@ router.get(
   (req, res) => {
     try {
       res.json({ user: req.user });
+      console.log(req.user);
+      console.log(req.user.isAdmin);
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
     }
   }
 );
+
+//Log out functionality
+
+router.get("/logout", (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
 
 module.exports = router;

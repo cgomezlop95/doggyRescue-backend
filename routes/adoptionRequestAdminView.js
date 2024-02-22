@@ -80,10 +80,7 @@ router.get("/approved", async (req, res) => {
         },
       },
     });
-    res.json({
-      adoptionRequests: adoptionRequestList,
-      user: req.user,
-    });
+    res.json({ adoptionRequests: adoptionRequestList });
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -171,10 +168,7 @@ router.get("/pending", async (req, res) => {
         requestApproved: null,
       },
     });
-    res.json({
-      adoptionRequests: adoptionRequestList,
-      user: req.user,
-    });
+    res.json({ adoptionRequests: adoptionRequestList });
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -204,10 +198,7 @@ router.get("/rejected", async (req, res) => {
         requestApproved: false,
       },
     });
-    res.json({
-      adoptionRequests: adoptionRequestListRejected,
-      user: req.user,
-    });
+    res.json({ adoptionRequests: adoptionRequestListRejected });
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -333,10 +324,7 @@ router.get("/:id", async (req, res) => {
         },
       },
     });
-    res.json({
-      adoptionRequest: singleAdoptionRequest,
-      user: req.user,
-    });
+    res.json({ adoptionRequest: singleAdoptionRequest });
   } catch (error) {
     console.error(error);
     res.json("Server error");
