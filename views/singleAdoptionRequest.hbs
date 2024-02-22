@@ -1,0 +1,106 @@
+<h3>Adoption request details</h3>
+
+<div class="singleAdoptionRequest">
+
+  <div style="flex-grow: 1;">
+    <h4>Dog requested</h4>
+    <p><b>Name:</b> {{adoptionRequest.dog.dogName}}</p>
+    <p><b>Age:</b> {{adoptionRequest.dog.dogAge}} year(s)</p>
+    <p><b>Weight:</b> {{adoptionRequest.dog.dogWeight}} kilo(s)</p>
+    <p><b>Sex:</b> {{adoptionRequest.dog.dogSex}}</p>
+    <p><b>Breed:</b> {{adoptionRequest.dog.dogBreed}}</p>
+    <p><b>Suitable for kids:</b>
+      {{booleanConverter adoptionRequest.dog.suitableForKids}}</p>
+    <p><b>Suitable for other pets:</b>
+      {{booleanConverter adoptionRequest.dog.suitableForOtherPets}}</p>
+    <p><b>Dog description:</b> {{adoptionRequest.dog.dogDescription}}</p>
+  </div>
+
+  <div
+    style="flex-grow: 1; max-width: 400px; margin-top: 70px; max-height: 450px; "
+  >
+    {{#if adoptionRequest.dog.dogPhotoURL}}
+      <img
+        src="{{adoptionRequest.dog.dogPhotoURL}}"
+        alt="{{adoptionRequest.dog.dogBreed}}"
+        style="max-width: 100%; max-height: 100%; border-radius: 10px; "
+      />
+    {{/if}}
+  </div>
+
+  <div style="flex-grow: 1;">
+    {{#if user.isAdmin}}
+      <h4>Request information</h4>
+      <p><b>Request Status:</b>
+        {{booleanConverterRequest adoptionRequest.requestApproved}}</p>
+      <p><b>Requester Name:</b>
+        {{adoptionRequest.user.firstName}}
+        {{adoptionRequest.user.lastName}}</p>
+      <p><b>Requester Phone Number:</b> {{adoptionRequest.user.phoneNumber}}</p>
+      <p><b>Requester Email:</b>
+        <a
+          href="mailto: {{adoptionRequest.user.email}}"
+        >{{adoptionRequest.user.email}}</a></p>
+      <p><b>Requester Age:</b> {{adoptionRequest.adopterAge}} years</p>
+      <p><b>Has the requester experience on taking care of pets?</b>
+        {{booleanConverter adoptionRequest.hasExperience}}</p>
+      <p><b>How many hours does the requester spend out of home every day?</b>
+        {{adoptionRequest.dailyHoursAway}}
+        hours</p>
+      <p><b>Does the requester have a terrace or garden?</b>
+        {{booleanConverter adoptionRequest.hasGarden}}</p>
+      <p><b>Does the requester have kids?</b>
+        {{booleanConverter adoptionRequest.hasKids}}</p>
+      <p><b>Does the requester have other pets in the house?</b>
+        {{booleanConverter adoptionRequest.hasOtherPets}}</p>
+      <p><b>How many people do they live in the house?</b>
+        {{adoptionRequest.numberOfPeople}}
+        people</p>
+      <p><b>How many trips does the requester do every year?</b>
+        {{adoptionRequest.numberOfTrips}}
+        trips per year</p>
+      <p><b>Which would be the expected monthly allowance for the dog?</b>
+        {{adoptionRequest.monthlyMoney}}
+        euros per month</p>
+      <p><b>Requester Description:</b>
+        {{adoptionRequest.adopterDescription}}</p>
+    {{/if}}
+  </div>
+
+</div>
+
+{{#if user.isAdmin}}
+  {{#unless adoptionRequest.requestApproved}}
+    <div>
+      <form
+        action="/adoption-requests/approve/{{adoptionRequest.userId}}_{{adoptionRequest.dogId}}?_method=PUT"
+        method="post"
+      >
+        <button>Approve Adoption Request</button>
+      </form>
+    </div>
+
+    <div>
+      <form
+        action="/adoption-requests/deny/{{adoptionRequest.userId}}_{{adoptionRequest.dogId}}?_method=PUT"
+        method="post"
+      >
+        <button>Deny Adoption Request</button>
+      </form>
+    </div>
+
+    <div>
+      <a href="/adoption-requests/pending">
+        <button>View All Pending Adoption Requests</button>
+      </a>
+    </div>
+  {{/unless}}
+
+{{else}}
+  <div>
+    <a href="/my-adoption-requests/">
+      <button>View All Your Adoption Requests</button>
+    </a>
+  </div>
+
+{{/if}}

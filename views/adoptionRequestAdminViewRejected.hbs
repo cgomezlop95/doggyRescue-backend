@@ -1,0 +1,14 @@
+<h3>Rejected Adoption Requests</h3>
+<ul>
+  {{#each adoptionRequests}}
+    <li>
+      Rejected request for:
+      <a href="/adoption-requests/{{this.userId}}_{{this.dogId}}">
+        {{this.user.firstName}}
+        {{this.user.lastName}}
+        -
+        {{this.dog.dogName}}
+      </a>
+    </li>
+  {{/each}}
+</ul>

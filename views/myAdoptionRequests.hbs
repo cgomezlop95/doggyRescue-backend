@@ -1,0 +1,12 @@
+<h3>My Adoption Requests</h3>
+<ul>
+  {{#each adoptionRequests}}
+  <li>
+    <a href="/my-adoption-requests/{{this.userId}}_{{this.dogId}}">
+      You want to adopt
+      {{this.dog.dogName}}
+    </a>- Request Status:
+    {{booleanConverterRequest this.requestApproved}}<br />
+  {{/each}}
+  </li>
+</ul>

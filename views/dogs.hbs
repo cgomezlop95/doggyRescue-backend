@@ -1,0 +1,61 @@
+<h3>Our dogs</h3>
+
+<div class="filter">
+
+  <div>
+    <label for="dogSex">Filter by Dog Sex</label>
+    <select id="dogSex" name="dogSex" onchange="filterDogs()">
+      <option value="all">All</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="isVaccinated">Is this dog fully vaccinated?</label>
+    <input
+      type="checkbox"
+      id="isVaccinated"
+      name="isVaccinated"
+      onchange="filterDogs()"
+    />
+  </div>
+
+</div>
+
+<div>
+  <ul id="dogsList">
+    {{#each dogs}}
+      <li
+        class="singleDog"
+        data-dog-sex="{{this.dogSex}}"
+        data-vaccinated="{{this.isVaccinated}}"
+      >
+        <a href="/dog/{{this.id}}">
+
+          {{#if this.dogPhotoURL}}
+
+            <div class="dogImageContainer">
+              <img src={{this.dogPhotoURL}} alt={{this.dogBreed}} />
+            </div>
+          {{/if}}
+
+          <div class="dogInfo">
+            {{this.dogName}}
+            -
+            {{this.dogAge}}
+            year(s)<br />
+            {{this.dogBreed}}
+            -
+            {{this.dogWeight}}
+            kg<br />
+            {{#if this.dogAdopted}}
+              <b>Adopted</b>
+            {{/if}}
+          </div>
+
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>

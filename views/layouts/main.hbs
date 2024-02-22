@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="icon" type="image/x-icon" href="/stylesheets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+
+    {{> navigation }}
+
+    <div class="body-content">
+        {{{body}}}
+    </div>
+
+    <footer>
+      <p>&copy; 2024 DoggyRescue - Cristina Gómez. All rights reserved. | <a href="/privacy-policy">Privacy Policy</a></p>
+    </footer>
+
+    <script src="/stylesheets/filters.js"></script>
+    
+  </body>
+  
+</html>

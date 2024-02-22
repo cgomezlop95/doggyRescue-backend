@@ -1,0 +1,29 @@
+<nav>
+  <p class="nav-title">Welcome to Doggy Rescue</p>
+  <!-- Permanent tabs -->
+  <a href="/dog/pending">Dogs Ready for Adoption</a>
+  <a href="/dog/adopted">Adopted Dogs</a>
+  <a href="/about-us">About Us</a>
+
+  <!-- Depending on whether there is a user logged in or not -->
+  {{#if user}}
+    <a href="/">My Profile</a>
+    <a href="/my-adoption-requests">My Adoption Requests</a>
+    <a href="/auth/logout">Logout</a>
+  {{else}}
+    <a href="/auth/register-page">Sign Up</a>
+    <a href="/auth/login-page">Login</a>
+  {{/if}}
+</nav>
+
+<nav>
+  <!-- Only admin users will see these options -->
+  {{#if user.isAdmin}}
+    <p class="nav-title">Welcome to the Admin Section</p>
+    <a href="/adoption-requests/approved">Approved Adoption Requests</a>
+    <a href="/adoption-requests/pending">Pending Adoption Requests</a>
+    <a href="/adoption-requests/rejected">Rejected Adoption Requests</a>
+    <a href="/create-new-dog">Add a New Dog</a>
+    <a href="/user">View All Users</a>
+  {{/if}}
+</nav>

@@ -1,0 +1,28 @@
+<h3>User Profile</h3>
+<p><b>First Name:</b> {{userById.firstName}}</p>
+<p><b>Last Name:</b> {{userById.lastName}}</p>
+<p><b>Email:</b> {{userById.email}}</p>
+<p><b>Phone Number:</b> {{userById.phoneNumber}}</p>
+<p><b>Admin Rights:</b> {{userById.isAdmin}}</p>
+
+{{#if userById.isAdmin}}
+  <div>
+    <form action="/user/remove-admin/{{userById.id}}?_method=PUT" method="post">
+      <button>Remove Admin Rights</button>
+    </form>
+  </div>
+{{/if}}
+
+{{#unless userById.isAdmin}}
+  <div>
+    <form action="/user/give-admin/{{userById.id}}?_method=PUT" method="post">
+      <button>Give Admin Rights</button>
+    </form>
+  </div>
+{{/unless}}
+
+<div>
+  <a href="/user">
+    <button>View All Users</button>
+  </a>
+</div>
