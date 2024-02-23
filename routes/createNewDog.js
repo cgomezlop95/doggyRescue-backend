@@ -8,26 +8,6 @@ const handleUpload = require("../middlewares/handleUpload");
 /**
  * @swagger
  * /create-new-dog:
- *   get:
- *     summary: Create New Dog Form
- *     description: Renders the form for creating a new dog.
- *     responses:
- *       200:
- *         description: Returns the create new dog form.
- */
-
-router.get("/", async (req, res) => {
-  try {
-    res.json({ user: req.user });
-  } catch (error) {
-    console.error(error);
-    res.json("Server error");
-  }
-});
-
-/**
- * @swagger
- * /create-new-dog:
  *   post:
  *     summary: Create and Add a New Dog
  *     description: Creates and adds a new dog to the database.
