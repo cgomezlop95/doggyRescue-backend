@@ -40,6 +40,8 @@ model Dog {
   isVaccinated            Boolean?
   isSterilized            Boolean?
   dogPhotoURL             String?
+  longitude               Float?
+  latitude                Float?
   adoptionRequests        adoptionRequest[]
 }
 
