@@ -2,6 +2,7 @@ const passport = require("passport");
 const prisma = require("../prisma");
 const { cookieExtractor } = require("../utils/cookieExtractor");
 const JwtStrategy = require("passport-jwt").Strategy;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 require("dotenv").config();
 

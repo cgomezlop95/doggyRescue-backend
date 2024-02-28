@@ -71,15 +71,15 @@ router.post("/", upload.single("dogPhotoURL"), async (req, res) => {
       isSterilized,
       potentiallyDangerousDog,
     } = req.body;
-    const isDogAdopted = dogAdopted === "on" ? true : false;
+    //const isDogAdopted = dogAdopted === "on" ? true : false;
     //If dogAdopted is equal to "on", then isDogAdopted is assigned the value true.
     //If dogAdopted is not equal to "on", then isDogAdopted is assigned the value false.
-    const isSuitableForKids = suitableForKids === "on" ? true : false;
-    const isSuitableForOtherPets = suitableForOtherPets === "on" ? true : false;
-    const isPotentiallyDangerousDog =
-      potentiallyDangerousDog === "on" ? true : false;
-    const isVaccinatedBoolean = isVaccinated === "on" ? true : false;
-    const isSterilizedBoolean = isSterilized === "on" ? true : false;
+    // const isSuitableForKids = suitableForKids === "on" ? true : false;
+    // const isSuitableForOtherPets = suitableForOtherPets === "on" ? true : false;
+    // const isPotentiallyDangerousDog =
+    //   potentiallyDangerousDog === "on" ? true : false;
+    // const isVaccinatedBoolean = isVaccinated === "on" ? true : false;
+    // const isSterilizedBoolean = isSterilized === "on" ? true : false;
     const dogAgeFloat = parseFloat(dogAge);
     const dogWeightFloat = parseFloat(dogWeight);
     await prisma.dog.create({
@@ -89,14 +89,14 @@ router.post("/", upload.single("dogPhotoURL"), async (req, res) => {
         dogWeight: dogWeightFloat,
         dogSex,
         dogBreed,
-        dogAdopted: isDogAdopted,
-        suitableForKids: isSuitableForKids,
-        suitableForOtherPets: isSuitableForOtherPets,
+        dogAdopted,
+        suitableForKids,
+        suitableForOtherPets,
         dogDescription,
         dogPhotoURL: dogPhotoURL,
-        potentiallyDangerousDog: isPotentiallyDangerousDog,
-        isVaccinated: isVaccinatedBoolean,
-        isSterilized: isSterilizedBoolean,
+        potentiallyDangerousDog,
+        isVaccinated,
+        isSterilized,
       },
     });
     res.redirect("/dog/pending");
