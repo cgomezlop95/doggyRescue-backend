@@ -46,17 +46,8 @@ const handleUpload = require("../middlewares/handleUpload");
  *         description: Bad request or server error.
  */
 
-router.post("/", upload.single("dogPhotoURL"), async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    let dogPhotoURL;
-    // Check if a file has been uploaded, this avoids an error in case I do not upload a new pic
-    if (req.file) {
-      const b64 = Buffer.from(req.file.buffer).toString("base64");
-      let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-      const cldRes = await handleUpload(dataURI);
-      dogPhotoURL = cldRes.secure_url;
-    }
-
     const {
       dogName,
       dogAge,
@@ -70,33 +61,28 @@ router.post("/", upload.single("dogPhotoURL"), async (req, res) => {
       isVaccinated,
       isSterilized,
       potentiallyDangerousDog,
+      dogPhotoURL,
+      longitude,
+      latitude,
     } = req.body;
-    //const isDogAdopted = dogAdopted === "on" ? true : false;
-    //If dogAdopted is equal to "on", then isDogAdopted is assigned the value true.
-    //If dogAdopted is not equal to "on", then isDogAdopted is assigned the value false.
-    // const isSuitableForKids = suitableForKids === "on" ? true : false;
-    // const isSuitableForOtherPets = suitableForOtherPets === "on" ? true : false;
-    // const isPotentiallyDangerousDog =
-    //   potentiallyDangerousDog === "on" ? true : false;
-    // const isVaccinatedBoolean = isVaccinated === "on" ? true : false;
-    // const isSterilizedBoolean = isSterilized === "on" ? true : false;
-    const dogAgeFloat = parseFloat(dogAge);
-    const dogWeightFloat = parseFloat(dogWeight);
+
     await prisma.dog.create({
       data: {
         dogName,
-        dogAge: dogAgeFloat,
-        dogWeight: dogWeightFloat,
+        dogAge: parseFloat(dogAge),
+        dogWeight: parseFloat(dogWeight),
         dogSex,
         dogBreed,
         dogAdopted,
         suitableForKids,
         suitableForOtherPets,
         dogDescription,
-        dogPhotoURL: dogPhotoURL,
+        dogPhotoURL,
         potentiallyDangerousDog,
         isVaccinated,
         isSterilized,
+        longitude: parseFloat(longitude),
+        latitude: parseFloat(latitude),
       },
     });
     res.redirect("/dog/pending");
