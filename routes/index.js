@@ -6,7 +6,8 @@ router.get("/", function (req, res, next) {
 });
 
 router.use("/auth", require("./auth"));
-router.use("/dog", require("./dog"));
+router.use("/dogs", require("./dogs"));
+router.use("/dog", require("./singleDog"));
 router.use("/request-dog", require("./adoptionRequest"));
 router.use("/create-new-dog", require("./createNewDog"));
 router.use("/update-dog", require("./updateDog"));
