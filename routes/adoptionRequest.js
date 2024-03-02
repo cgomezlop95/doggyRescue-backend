@@ -91,32 +91,35 @@ router.get("/:id", async (req, res) => {
 
 router.post("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const dogById = await prisma.dog.findUnique({
-      where: {
-        id,
-      },
-    });
-    const ifExperience = "hasExperience" in req.body;
-    const ifOtherPets = "hasOtherPets" in req.body;
-    const ifKids = "hasKids" in req.body;
-    const ifGarden = "hasGarden" in req.body;
+    // const { id } = req.params;
+    // const dogById = await prisma.dog.findUnique({
+    //   where: {
+    //     id,
+    //   },
+    // });
+    // const ifExperience = "hasExperience" in req.body;
+    // const ifOtherPets = "hasOtherPets" in req.body;
+    // const ifKids = "hasKids" in req.body;
+    // const ifGarden = "hasGarden" in req.body;
     const newRequest = await prisma.adoptionRequest.create({
       data: {
+        userId: req.body.userId,
+        dogId: req.body.dogId,
         requestApproved: null,
         adopterAge: parseFloat(req.body.adopterAge),
-        hasExperience: ifExperience,
+        hasExperience: req.body.hasExperience,
         dailyHoursAway: parseFloat(req.body.dailyHoursAway),
-        hasOtherPets: ifOtherPets,
+        hasOtherPets: req.body.hasOtherPets,
         OtherPets: req.body.OtherPets,
-        hasKids: ifKids,
-        hasGarden: ifGarden,
+        hasKids: req.body.hasKids,
+        hasGarden: req.body.hasGarden,
         numberOfTrips: parseFloat(req.body.numberOfTrips),
         monthlyMoney: parseFloat(req.body.monthlyMoney),
         numberOfPeople: parseFloat(req.body.numberOfPeople),
         adopterDescription: req.body.adopterDescription,
-        userId: req.user.id,
-        dogId: dogById.id,
+        // userId: req.user.id, //Cannot read properties of undefined (reading 'id')
+        // userId: auth.currentUser.id, //auth is not defined
+        // dogId: dogById.id,
       },
     });
 
