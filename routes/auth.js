@@ -19,6 +19,9 @@ router.post("/register", async (req, res) => {
       data: {
         email: req.body.email,
         password: hashedPassword,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
       },
     });
     const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
@@ -45,8 +48,7 @@ router.get(
   (req, res) => {
     try {
       res.json({ user: req.user });
-      console.log(req.user);
-      console.log(req.user.isAdmin);
+      console.log("req.user", req.user);
     } catch (error) {
       console.log(error);
       res.status(500).send("Internal Server Error");
