@@ -118,20 +118,8 @@ router.get("/:id", async (req, res) => {
  *         description: Bad request or server error.
  */
 
-router.put("/:id", upload.single("dogPhotoURL"), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    let dogPhotoURL;
-    // Check if a file has been uploaded, this avoids an error in case I do not upload a new pic
-    if (req.file) {
-      const b64 = Buffer.from(req.file.buffer).toString("base64");
-      let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-      const cldRes = await handleUpload(dataURI);
-      dogPhotoURL = cldRes.secure_url;
-    }
-
-    const isDogAdopted = "dogAdopted" in req.body;
-    const isSuitableForKids = "suitableForKids" in req.body;
-    const isSuitableForOtherPets = "suitableForOtherPets" in req.body;
     await prisma.dog.update({
       where: { id: req.params.id },
       data: {
@@ -140,14 +128,17 @@ router.put("/:id", upload.single("dogPhotoURL"), async (req, res) => {
         dogWeight: parseFloat(req.body.dogWeight),
         dogSex: req.body.dogSex,
         dogBreed: req.body.dogBreed,
-        dogAdopted: isDogAdopted,
-        suitableForKids: isSuitableForKids,
-        suitableForOtherPets: isSuitableForOtherPets,
+        dogAdopted: req.body.dogAdopted,
+        suitableForKids: req.body.suitableForKids,
+        suitableForOtherPets: req.body.suitableForOtherPets,
         dogDescription: req.body.dogDescription,
-        dogPhotoURL: dogPhotoURL,
+        dogPhotoURL: req.body.dogPhotoURL,
+        latitude: parseFloat(req.body.latitude),
+        longitude: parseFloat(req.body.longitude),
       },
     });
-    res.redirect(`/dog/${req.params.id}`);
+    // res.redirect(`/dog/${req.params.id}`);
+    res.json("Success");
   } catch (error) {
     console.error(error);
     res.json("Server error");
