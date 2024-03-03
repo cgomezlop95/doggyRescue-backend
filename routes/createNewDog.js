@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
       dogWeight,
       dogSex,
       dogBreed,
-      dogAdopted,
+      // dogAdopted,
       suitableForKids,
       suitableForOtherPets,
       dogDescription,
@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
         dogWeight: parseFloat(dogWeight),
         dogSex,
         dogBreed,
-        dogAdopted,
+        dogAdopted: false,
         suitableForKids,
         suitableForOtherPets,
         dogDescription,
@@ -85,7 +85,8 @@ router.post("/", async (req, res) => {
         latitude: parseFloat(latitude),
       },
     });
-    res.redirect("/dog/pending");
+    // res.redirect("/dog/pending");
+    res.json("dog created with success");
   } catch (error) {
     console.error(error);
     res.json("Server error");
