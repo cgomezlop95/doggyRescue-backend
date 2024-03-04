@@ -76,6 +76,7 @@ router.get("/approved", async (req, res) => {
         dog: {
           select: {
             dogName: true,
+            dogPhotoURL: true,
           },
         },
       },
@@ -161,6 +162,7 @@ router.get("/pending", async (req, res) => {
         dog: {
           select: {
             dogName: true,
+            dogPhotoURL: true,
           },
         },
       },
@@ -191,6 +193,7 @@ router.get("/rejected", async (req, res) => {
         dog: {
           select: {
             dogName: true,
+            dogPhotoURL: true,
           },
         },
       },
@@ -199,6 +202,38 @@ router.get("/rejected", async (req, res) => {
       },
     });
     res.json({ adoptionRequests: adoptionRequestListRejected });
+  } catch (error) {
+    console.error(error);
+    res.json("Server error");
+  }
+});
+
+//Route to get all the requests, no matter the status
+
+router.get("", async (req, res) => {
+  try {
+    const adoptionRequestList = await prisma.adoptionRequest.findMany({
+      include: {
+        user: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+            phoneNumber: true,
+          },
+        },
+        dog: {
+          select: {
+            dogName: true,
+            dogPhotoURL: true,
+            dogBreed: true,
+            dogAge: true,
+            dogBreed: true,
+          },
+        },
+      },
+    });
+    res.json({ adoptionRequests: adoptionRequestList });
   } catch (error) {
     console.error(error);
     res.json("Server error");
