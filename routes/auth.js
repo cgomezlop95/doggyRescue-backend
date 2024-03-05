@@ -56,4 +56,13 @@ router.get(
   }
 );
 
+router.get("/logout", (req, res) => {
+  try {
+    res.clearCookie("token").send("Cookie is cleared");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;
