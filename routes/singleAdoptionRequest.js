@@ -173,7 +173,7 @@ router.put("/approve/:id", async (req, res) => {
         dogAdopted: true,
       },
     });
-    // res.redirect("/adoption-requests/pending");
+    res.json("Request approved");
   } catch (error) {
     console.error(error);
     res.json("Server error");
@@ -223,7 +223,7 @@ router.put("/deny/:id", async (req, res) => {
         requestApproved: false,
       },
     });
-    // res.redirect("/adoption-requests/pending");
+    res.json("Request denied"); 
   } catch (error) {
     console.error(error);
     res.json("Server error");
