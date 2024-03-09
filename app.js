@@ -8,7 +8,11 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const cors = require("cors");
 
-const whitelist = ["http://localhost:5173"];
+const whitelist = [
+  "http://localhost:5173",
+  "http://doggy-rescue.vercel.app",
+  "https://doggy-rescue.vercel.app",
+];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
