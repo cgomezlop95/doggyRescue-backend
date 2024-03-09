@@ -22,6 +22,7 @@ router.post("/register", async (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
+        userPhotoURL: req.body.userPhotoURL,
       },
     });
     const jwtToken = jwt.sign({ sub: req.body.email }, "secret");

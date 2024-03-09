@@ -78,12 +78,12 @@ router.get("/", async (req, res) => {
         },
       },
       where: {
-        user: req.user,
+        userId: req.query.userId, //Testing
       },
     });
     res.json({
       adoptionRequests: adoptionRequestList,
-      user: req.user,
+      userId: req.body.userId,
     });
   } catch (error) {
     console.error(error);
