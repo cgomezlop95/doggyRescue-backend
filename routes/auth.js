@@ -11,13 +11,12 @@ const prisma = require("../prisma");
 //   secure: false,
 //   sameSite: "strict",
 // };
-//Option 1: No hace el login
+//Option 1: No hace el login en PROD
 
 const cookieSettings = {
   httpOnly: true,
-  secure: true, // Because you're using HTTPS
+  secure: false, // Because you're using HTTPS
   sameSite: "None", // Necessary for cross-site access when using 'secure: true'
-  domain: 'https://doggyrescue-backend.onrender.com', // Optional, specify if needed for subdomain scenarios
 };
 //No me elimina el cookie (no me hace el logout)
 //Hace el logout en local
