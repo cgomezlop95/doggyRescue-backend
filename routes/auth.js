@@ -11,16 +11,13 @@ const prisma = require("../prisma");
 //   secure: false,
 //   sameSite: "strict",
 // };
-//Option 1: No hace el login en PROD
+//Option 1: Con estos valores no hacía el login en PROD
 
 const cookieSettings = {
   httpOnly: true,
-  secure: true, // Because you're using HTTPS
-  sameSite: "None", // Necessary for cross-site access when using 'secure: true'
+  secure: true, 
+  sameSite: "None", 
 };
-//No me elimina el cookie (no me hace el logout)
-//Hace el logout en local
-//Problemas con login/logout en PROD
 
 router.post("/register", async (req, res) => {
   try {
@@ -53,8 +50,6 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-//Getting the error 401 in Render
-
 router.get(
   "/logged-in",
   passport.authenticate("jwt", { session: false }),
@@ -77,5 +72,7 @@ router.get("/logout", (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+//Adding the "cookieSettings" to the logout function helped in PROD
 
 module.exports = router;
