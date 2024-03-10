@@ -6,6 +6,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.use("/auth", require("./auth"));
+//https://doggyrescue-backend.onrender.com/auth/
 router.use("/dogs", require("./dogs"));
 router.use("/dog", require("./singleDog"));
 router.use("/request-dog", require("./adoptionRequest"));

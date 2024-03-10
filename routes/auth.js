@@ -6,10 +6,17 @@ const jwt = require("jsonwebtoken");
 
 const prisma = require("../prisma");
 
+// const cookieSettings = {
+//   httpOnly: true,
+//   secure: false,
+//   sameSite: "strict",
+// };
+
 const cookieSettings = {
   httpOnly: true,
-  secure: false,
-  sameSite: "strict",
+  secure: true, // Because you're using HTTPS
+  sameSite: "None", // Necessary for cross-site access when using 'secure: true'
+  // domain: 'your-backend-domain.com', // Optional, specify if needed for subdomain scenarios
 };
 
 router.post("/register", async (req, res) => {
@@ -42,6 +49,8 @@ router.post("/login", async (req, res, next) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
+//Getting the error 401 in Render
 
 router.get(
   "/logged-in",
