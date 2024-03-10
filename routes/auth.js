@@ -15,7 +15,7 @@ const prisma = require("../prisma");
 
 const cookieSettings = {
   httpOnly: true,
-  secure: false, // Because you're using HTTPS
+  secure: true, // Because you're using HTTPS
   sameSite: "None", // Necessary for cross-site access when using 'secure: true'
 };
 //No me elimina el cookie (no me hace el logout)
