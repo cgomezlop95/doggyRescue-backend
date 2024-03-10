@@ -13,7 +13,8 @@ router.use("/create-new-dog", require("./createNewDog"));
 router.use("/update-dog", require("./updateDog"));
 router.use("/adoption-requests", require("./adoptionRequestAdminView"));
 router.use("/adoption-request", require("./singleAdoptionRequest"));
-router.use("/user", require("./users"));
+router.use("/users", require("./users"));
+router.use("/user", require("./user"));
 router.use("/my-adoption-requests", require("./myAdoptionRequests"));
 
 module.exports = router;
