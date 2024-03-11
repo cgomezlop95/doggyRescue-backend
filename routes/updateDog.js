@@ -3,7 +3,6 @@ const router = express.Router();
 const prisma = require("../prisma");
 
 const upload = require("../config/multer");
-const handleUpload = require("../middlewares/handleUpload");
 
 /**
  * @swagger
