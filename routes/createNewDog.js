@@ -54,7 +54,6 @@ router.post("/", async (req, res) => {
       dogWeight,
       dogSex,
       dogBreed,
-      // dogAdopted,
       suitableForKids,
       suitableForOtherPets,
       dogDescription,
@@ -66,11 +65,17 @@ router.post("/", async (req, res) => {
       latitude,
     } = req.body;
 
+    console.log("req body", req.body); 
+    const longitudeFloat = parseFloat(longitude.replace(',', '.'));
+    const latitudeFloat = parseFloat(latitude.replace(',', '.'));
+    const dogAgeFloat = parseFloat(dogAge.replace(',', '.'));
+    const dogWeightFloat = parseFloat(dogWeight.replace(',', '.'));
+
     await prisma.dog.create({
       data: {
         dogName,
-        dogAge: parseFloat(dogAge),
-        dogWeight: parseFloat(dogWeight),
+        dogAge: dogAgeFloat,
+        dogWeight: dogWeightFloat,
         dogSex,
         dogBreed,
         dogAdopted: false,
@@ -81,8 +86,8 @@ router.post("/", async (req, res) => {
         potentiallyDangerousDog,
         isVaccinated,
         isSterilized,
-        longitude: parseFloat(longitude),
-        latitude: parseFloat(latitude),
+        longitude: longitudeFloat,
+        latitude: latitudeFloat,
       },
     });
     // res.redirect("/dog/pending");
