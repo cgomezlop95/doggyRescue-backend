@@ -69,11 +69,15 @@ router.get("/", async (req, res) => {
         user: {
           select: {
             email: true,
+            firstName: true,
+            lastName: true,
           },
         },
         dog: {
           select: {
             dogName: true,
+            dogBreed: true,
+            dogPhotoURL: true,
           },
         },
       },
