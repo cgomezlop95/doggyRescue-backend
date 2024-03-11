@@ -15,8 +15,8 @@ const prisma = require("../prisma");
 
 const cookieSettings = {
   httpOnly: true,
-  secure: true, 
-  sameSite: "None", 
+  secure: true,
+  sameSite: "None",
 };
 
 router.post("/register", async (req, res) => {
@@ -40,10 +40,29 @@ router.post("/register", async (req, res) => {
   }
 });
 
+// router.post("/login", async (req, res, next) => {
+//   try {
+//     const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
+//     res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
 router.post("/login", async (req, res, next) => {
   try {
-    const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
-    res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
+    const user = await prisma.user.findUnique({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (user && (await bcrypt.compare(req.body.password, user.password))) {
+      const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
+      res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
+    } else {
+      res.status(401).send("Invalid credentials");
+    }
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
