@@ -104,6 +104,7 @@ router.get("/:id", async (req, res) => {
             firstName: true,
             lastName: true,
             phoneNumber: true,
+            userPhotoURL: true,
           },
         },
         dog: {
