@@ -6,13 +6,6 @@ const jwt = require("jsonwebtoken");
 
 const prisma = require("../prisma");
 
-// const cookieSettings = {
-//   httpOnly: true,
-//   secure: false,
-//   sameSite: "strict",
-// };
-//Option 1: Con estos valores no hacía el login en PROD
-
 const cookieSettings = {
   httpOnly: true,
   secure: true,
@@ -39,16 +32,6 @@ router.post("/register", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-// router.post("/login", async (req, res, next) => {
-//   try {
-//     const jwtToken = jwt.sign({ sub: req.body.email }, "secret");
-//     res.cookie("token", jwtToken, cookieSettings).send("Cookie is set");
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
 
 router.post("/login", async (req, res, next) => {
   try {
@@ -91,7 +74,5 @@ router.get("/logout", (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-//Adding the "cookieSettings" to the logout function helped in PROD
 
 module.exports = router;

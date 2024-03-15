@@ -110,4 +110,18 @@ router.get("/adopted", async (req, res) => {
   }
 });
 
+router.get("/breeds", async (req, res) => {
+  try {
+    const dogBreeds = await prisma.dog.findMany({
+      select: {
+        dogBreed: true,
+      },
+    });
+    res.json({ dogBreeds: dogBreeds });
+  } catch (error) {
+    console.error(error);
+    res.json("Server error");
+  }
+});
+
 module.exports = router;

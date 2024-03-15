@@ -64,11 +64,10 @@ router.post("/", async (req, res) => {
       latitude,
     } = req.body;
 
-    console.log("req body", req.body); 
-    const longitudeFloat = parseFloat(longitude.replace(',', '.'));
-    const latitudeFloat = parseFloat(latitude.replace(',', '.'));
-    const dogAgeFloat = parseFloat(dogAge.replace(',', '.'));
-    const dogWeightFloat = parseFloat(dogWeight.replace(',', '.'));
+    const longitudeFloat = parseFloat(longitude.replace(",", "."));
+    const latitudeFloat = parseFloat(latitude.replace(",", "."));
+    const dogAgeFloat = parseFloat(dogAge.replace(",", "."));
+    const dogWeightFloat = parseFloat(dogWeight.replace(",", "."));
 
     await prisma.dog.create({
       data: {
