@@ -42,8 +42,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//Update user profile
-
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -55,11 +53,10 @@ router.put("/update/:id", async (req, res) => {
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        phoneNumber: req.body.phoneName,
+        phoneNumber: req.body.phoneNumber,
         userPhotoURL: req.body.userPhotoURL,
       },
     });
-    // res.redirect("/user");
     res.json("Success");
   } catch (error) {
     console.error(error);
